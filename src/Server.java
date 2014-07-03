@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	public static int PORT = 9980;
+	public static int PORT = 9900;
 	private static ServerSocket serverSocket = null;
 	private static Socket clientSocket = null;
 
@@ -20,12 +20,12 @@ public class Server {
 			System.out.println("Server is ready for the connection.");
 			clientSocket = serverSocket.accept();
 
-			// creates a thread in order to connect multiple clients
-			new Thread(new ConnectionHandler(clientSocket)).start();
-
 		} catch (Exception e) {
 			System.out.println("Port error in Server");
 		}
+
+		// creates a thread in order to connect multiple clients
+		new Thread(new ConnectionHandler(clientSocket)).start();
 	}
 
 	public ServerSocket getServerSocket() {

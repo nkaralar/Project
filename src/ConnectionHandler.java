@@ -1,7 +1,3 @@
-/*
- * author: Nazli Karalar
- */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -50,13 +46,20 @@ public class ConnectionHandler implements Runnable {
 
 	// shows the dialog between client and server in server part
 	private void printDialog(Scanner scanner, PrintWriter output, Scanner input) {
-		String text, clientInput;
-		int msgNo;
+		String text, clientInput, messageFromClient;
+		int msgNo, msgNoforClient = 0;
+		System.out.println("!Enter a msg number: ");
 		while ((clientInput = input.nextLine()) != null) {
 			msgNo = Integer.parseInt(clientInput);
 			Answers answer = new Answers(msgNo);
-			text = answer.createAnswers();
-			output.println(text);
+			output.println(answer.createAnswers());
+			
+			msgNoforClient = scanner.nextInt();
+			Messages message = new Messages(msgNoforClient);
+			output.println(message.createMessages());
+			messageFromClient = input.nextLine();
+			System.out.println("Client: " + messageFromClient);
+			System.out.println("Enter a msg number: ");
 
 		}
 	}
