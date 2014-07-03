@@ -23,18 +23,20 @@ public class ConnectionHandler implements Runnable {
 	public void run() {
 		Scanner scanner;
 		try {
-			// creates writer and readers to transmit and receive data
-			PrintWriter output = new PrintWriter(
+			// creates writer and reader to exchange data
+			PrintWriter serverOutput = new PrintWriter(
 					clientSocket.getOutputStream(), true);
-			Scanner input = new Scanner(clientSocket.getInputStream());
+			Scanner inputFromClient = new Scanner(clientSocket.getInputStream());
+
+			// creates scanner to read input from user
 			scanner = new Scanner(System.in);
-			printDialog(scanner, output, input);
+			printDialog(scanner, serverOutput, inputFromClient);
 
 			// delays 1s in order to prevent the reader, writer and the sockets
 			// to close early
 			Thread.sleep(1000);
-			output.close();
-			input.close();
+			serverOutput.close();
+			inputFromClient.close();
 			clientSocket.close();
 			serverSocket.close();
 
@@ -44,24 +46,33 @@ public class ConnectionHandler implements Runnable {
 
 	}
 
-	// shows the dialog between client and server in server part
-	private void printDialog(Scanner scanner, PrintWriter output, Scanner input) {
-		String text, clientInput, messageFromClient;
-		int msgNo, msgNoforClient = 0;
-		System.out.println("!Enter a msg number: ");
-		while ((clientInput = input.nextLine()) != null) {
-			msgNo = Integer.parseInt(clientInput);
-			Answers answer = new Answers(msgNo);
-			output.println(answer.createAnswers());
-			
-			msgNoforClient = scanner.nextInt();
-			Messages message = new Messages(msgNoforClient);
-			output.println(message.createMessages());
-			messageFromClient = input.nextLine();
-			System.out.println("Client: " + messageFromClient);
-			System.out.println("Enter a msg number: ");
+	// displays the message and answer dialog
+	private void printDialog(Scanner scanner, PrintWriter serverOutput,
+			Scanner inputFromClient) {
+		String clientInput;
+		System.out.println("Enter a msg number: ");
+		while ((clientInput = inputFromClient.nextLine()) != null) {
+			sendAnswer(serverOutput, clientInput);
+			askForAnswers(scanner, serverOutput, inputFromClient);
+			System.out.println("\nEnter a msg number: ");
 
 		}
+	}
+
+	// sends the answer that server asks for
+	private void sendAnswer(PrintWriter output, String clientInput) {
+		int msgNo = Integer.parseInt(clientInput);
+		Answers answer = new Answers(msgNo);
+		output.println(answer.createAnswers());
+	}
+
+	// asks for the answer of its message from client
+	private void askForAnswers(Scanner scanner, PrintWriter output,
+			Scanner input) {
+		int msgNo = scanner.nextInt();
+		Messages message = new Messages(msgNo);
+		output.println(message.createMessages());
+		System.out.println("Client: " + input.nextLine());
 	}
 
 }

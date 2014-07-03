@@ -12,8 +12,6 @@ public class Server {
 	private static Socket clientSocket = null;
 
 	public static void main(String[] args) throws IOException {
-		ServerSocket serverSocket = null;
-		Socket clientSocket = null;
 		try {
 			// creates server socket bound to PORT = 9900
 			serverSocket = new ServerSocket(PORT);

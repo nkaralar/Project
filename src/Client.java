@@ -21,24 +21,26 @@ public class Client {
 	// establishes client connection
 	private void connect() {
 		Socket socket = null;
-		Scanner input, scanner;
+		Scanner inputFromServer, scanner;
 		PrintWriter output;
 
 		try {
 			// creates socket to connect PORT = 9900 on the 'localhost'
 			socket = new Socket("localhost", PORT);
-			// creates writer and reader to transmit and receive data
-			output = new PrintWriter(socket.getOutputStream(), true);
-			input = new Scanner(socket.getInputStream());
-			scanner = new Scanner(System.in);
 
-			printDialog(input, scanner, output);
+			// creates writer and reader to exchange data
+			output = new PrintWriter(socket.getOutputStream(), true);
+			inputFromServer = new Scanner(socket.getInputStream());
+
+			// creates scanner to read input from user
+			scanner = new Scanner(System.in);
+			printDialog(inputFromServer, scanner, output);
 
 			// delays 1s in order to prevent the readers and the writer to close
 			// early
 			Thread.sleep(1000);
 			output.close();
-			input.close();
+			inputFromServer.close();
 			scanner.close();
 			socket.close();
 
@@ -47,36 +49,34 @@ public class Client {
 		}
 	}
 
-	// shows the dialog between client and server in client part
-	private void printDialog(Scanner input, Scanner scanner, PrintWriter output)
-			throws IOException {
-		String text, msg, textToServer;
-		int msgNo, messageNo = 0;
+	// displays the message and answer dialog
+	private void printDialog(Scanner inputFromServer, Scanner scanner,
+			PrintWriter output) throws IOException {
+		String textEntered;
 		System.out.println("Enter a msg number: ");
-		while ((text = scanner.nextLine()) != null) {
-			askForAnswer(input, output, text);
-			sendAnswer(input, output);
+		while ((textEntered = scanner.nextLine()) != null) {
+			askForAnswer(inputFromServer, output, textEntered);
+			sendAnswer(inputFromServer, output);
+			System.out.print("\nEnter a msg number: ");
 		}
 	}
 
-	private void askForAnswer(Scanner input, PrintWriter output, String text) {
-		String msg;
-		int msgNo;
-		msgNo = Integer.parseInt(text);
+	// asks for the answer of its message from server
+	private void askForAnswer(Scanner inputFromServer, PrintWriter output,
+			String text) {
+		int msgNo = Integer.parseInt(text);
 		Messages message = new Messages(msgNo);
 		output.println(message.createMessages());
-		msg = input.nextLine();
-		System.out.println("Server: " + msg);
+		System.out.println("Server: " + inputFromServer.nextLine());
 	}
 
-	private void sendAnswer(Scanner input, PrintWriter output) {
-		String textToServer;
-		int messageNo;
-		messageNo = Integer.parseInt(input.nextLine());
-		Answers answer = new Answers(messageNo);
-		textToServer = answer.createAnswers();
+	// sends the answer that server asks for
+	private void sendAnswer(Scanner inputFromServer, PrintWriter output) {
+		int msgNo = Integer.parseInt(inputFromServer.nextLine());
+		Answers answer = new Answers(msgNo);
+		String textToServer = answer.createAnswers();
 		output.println(textToServer);
-		System.out.print("\nEnter a msg number: ");
+
 	}
 
 }
