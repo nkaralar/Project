@@ -1,3 +1,9 @@
+
+
+/*
+ * author: Nazli Karalar
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -5,24 +11,18 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ConnectionHandler implements Runnable {
-	private Server server;
-	private Socket clientSocket;
 	private ServerSocket serverSocket;
+	private Socket clientSocket;
 
-	public ConnectionHandler(Socket s) {
-		clientSocket = s;
-	}
-
-	// gets server and client sockets specified in Server class
-	public ConnectionHandler() {
-		serverSocket = server.getServerSocket();
-		clientSocket = server.getClientSocket();
+	public ConnectionHandler(ServerSocket s) {
+		serverSocket = s;
 	}
 
 	@Override
 	public void run() {
 		Scanner scanner;
 		try {
+			clientSocket = serverSocket.accept();
 			// creates writer and reader to exchange data
 			PrintWriter serverOutput = new PrintWriter(
 					clientSocket.getOutputStream(), true);
@@ -32,15 +32,7 @@ public class ConnectionHandler implements Runnable {
 			scanner = new Scanner(System.in);
 			printDialog(scanner, serverOutput, inputFromClient);
 
-			// delays 1s in order to prevent the reader, writer and the sockets
-			// to close early
-			Thread.sleep(1000);
-			serverOutput.close();
-			inputFromClient.close();
-			clientSocket.close();
-			serverSocket.close();
-
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -62,16 +54,14 @@ public class ConnectionHandler implements Runnable {
 	// sends the answer that server asks for
 	private void sendAnswer(PrintWriter output, String clientInput) {
 		int msgNo = Integer.parseInt(clientInput);
-		Answers answer = new Answers(msgNo);
-		output.println(answer.createAnswers());
+		output.println(Answers.createAnswers(msgNo));
 	}
 
 	// asks for the answer of its message from client
 	private void askForAnswers(Scanner scanner, PrintWriter output,
 			Scanner input) {
 		int msgNo = scanner.nextInt();
-		Messages message = new Messages(msgNo);
-		output.println(message.createMessages());
+		output.println(Messages.createMessages(msgNo));
 		System.out.println("Client: " + input.nextLine());
 	}
 

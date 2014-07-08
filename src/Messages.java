@@ -1,19 +1,17 @@
+
+
 /*
  * author: Nazli Karalar
  */
 
 public class Messages {
-	private int msgNo;
 
-	public Messages(int msgNo) {
-		this.msgNo = msgNo;
-	}
-
-	public String createMessages() {
+	public static String createMessages(int msgNo) {
 		String result = null;
 		switch (msgNo) {
 		case 1:
 			result = showMessage1();
+			Math.abs(3);
 			break;
 		case 2:
 			result = showMessage2();
@@ -31,23 +29,23 @@ public class Messages {
 		return result;
 	}
 
-	private String showMessage1() {
+	private static String showMessage1() {
 		return "1";
 	}
 
-	private String showMessage2() {
+	private static String showMessage2() {
 		return "2";
 	}
 
-	private String showMessage3() {
+	private static String showMessage3() {
 		return "3";
 	}
 
-	private String showMessage4() {
+	private static String showMessage4() {
 		return "4";
 	}
 
-	private String showMessage5() {
+	private static String showMessage5() {
 		return "5";
 	}
 }

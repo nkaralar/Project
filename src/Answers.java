@@ -1,15 +1,8 @@
-/*
- * author: Nazli Karalar
- */
+
 
 public class Answers {
-	private int answerNo;
 
-	public Answers(int answerNo) {
-		this.answerNo = answerNo;
-	}
-
-	public String createAnswers() {
+	public static String createAnswers(int answerNo) {
 		String answer = null;
 		switch (answerNo) {
 		case 1:
@@ -31,23 +24,23 @@ public class Answers {
 		return answer;
 	}
 
-	private String showAnswer1() {
+	private static String showAnswer1() {
 		return "Answer1";
 	}
 
-	private String showAnswer2() {
+	private static String showAnswer2() {
 		return "Answer2";
 	}
 
-	private String showAnswer3() {
+	private static String showAnswer3() {
 		return "Answer3";
 	}
 
-	private String showAnswer4() {
+	private static String showAnswer4() {
 		return "Answer4";
 	}
 
-	private String showAnswer5() {
+	private static String showAnswer5() {
 		return "Answer5";
 	}
 }

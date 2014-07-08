@@ -1,8 +1,14 @@
+
+
 /*
  * author: Nazli Karalar
  */
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -16,6 +22,7 @@ public class Client {
 
 	public Client() {
 		connect();
+
 	}
 
 	// establishes client connection
@@ -25,6 +32,7 @@ public class Client {
 		PrintWriter output;
 
 		try {
+			callSCTPReader();
 			// creates socket to connect PORT = 9900 on the 'localhost'
 			socket = new Socket("localhost", PORT);
 
@@ -35,7 +43,7 @@ public class Client {
 			// creates scanner to read input from user
 			scanner = new Scanner(System.in);
 			printDialog(inputFromServer, scanner, output);
-
+			
 			// delays 1s in order to prevent the readers and the writer to close
 			// early
 			Thread.sleep(1000);
@@ -65,17 +73,25 @@ public class Client {
 	private void askForAnswer(Scanner inputFromServer, PrintWriter output,
 			String text) {
 		int msgNo = Integer.parseInt(text);
-		Messages message = new Messages(msgNo);
-		output.println(message.createMessages());
+		output.println(Messages.createMessages(msgNo));
 		System.out.println("Server: " + inputFromServer.nextLine());
 	}
 
 	// sends the answer that server asks for
 	private void sendAnswer(Scanner inputFromServer, PrintWriter output) {
 		int msgNo = Integer.parseInt(inputFromServer.nextLine());
-		Answers answer = new Answers(msgNo);
-		String textToServer = answer.createAnswers();
-		output.println(textToServer);
+		output.println(Answers.createAnswers(msgNo));
+
+	}
+
+	private void callSCTPReader() {
+		try {
+			InputStream input = new FileInputStream(new File("a.txt"));
+			SCTPReader.readHexStream(input);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
 	}
 
