@@ -1,5 +1,9 @@
 
 
+/*
+ * author: Nazli Karalar
+ */
+
 public class Answers {
 
 	public static String createAnswers(int answerNo) {

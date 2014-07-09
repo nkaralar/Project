@@ -9,11 +9,12 @@ import java.net.ServerSocket;
 
 public class Server {
 	public static int PORT = 9900;
-	private static ServerSocket serverSocket = null;
+	
+	private static ServerSocket serverSocket;
 
 	public static void main(String[] args) throws IOException {
 		try {
-			// creates server socket bound to PORT = 9900
+			// creates server socket whose PORT is 9900
 			serverSocket = new ServerSocket(PORT);
 			System.out.println("Server is ready for the connection.");
 		} catch (Exception e) {

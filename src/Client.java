@@ -46,6 +46,7 @@ public class Client {
 			
 			// delays 1s in order to prevent the readers and the writer to close
 			// early
+			
 			Thread.sleep(1000);
 			output.close();
 			inputFromServer.close();

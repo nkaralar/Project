@@ -20,16 +20,15 @@ public class ConnectionHandler implements Runnable {
 
 	@Override
 	public void run() {
-		Scanner scanner;
 		try {
 			clientSocket = serverSocket.accept();
-			// creates writer and reader to exchange data
+			// creates writer and reader to exchange data; true is for auto flush 
 			PrintWriter serverOutput = new PrintWriter(
 					clientSocket.getOutputStream(), true);
 			Scanner inputFromClient = new Scanner(clientSocket.getInputStream());
 
 			// creates scanner to read input from user
-			scanner = new Scanner(System.in);
+			Scanner scanner = new Scanner(System.in);
 			printDialog(scanner, serverOutput, inputFromClient);
 
 		} catch (IOException e) {
