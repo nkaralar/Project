@@ -1,4 +1,6 @@
-
+/*
+ * author: Nazli Karalar
+ */
 
 import java.io.InputStream;
 import java.util.Scanner;

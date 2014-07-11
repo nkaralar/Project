@@ -1,9 +1,11 @@
-
+/*
+ * author: Nazli Karalar
+ */
 
 public class PortInfo extends SCTPReader {
 	private static int SIZE = 2;
 
-	// determine source and destination ports 
+	// determine source and destination ports
 	public static int determinePorts(int pointer) {
 		byte[] sourcePort = new byte[SIZE];
 		byte[] destinationPort = new byte[SIZE];

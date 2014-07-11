@@ -1,3 +1,6 @@
+/*
+ * author: Nazli Karalar
+ */
 
 public class IsdnInfo extends SCTPReader {
 	private static byte messageType;

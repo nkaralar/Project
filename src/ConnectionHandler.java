@@ -1,5 +1,3 @@
-
-
 /*
  * author: Nazli Karalar
  */
@@ -22,7 +20,8 @@ public class ConnectionHandler implements Runnable {
 	public void run() {
 		try {
 			clientSocket = serverSocket.accept();
-			// creates writer and reader to exchange data; true is for auto flush 
+			// creates writer and reader to exchange data; true is for auto
+			// flush
 			PrintWriter serverOutput = new PrintWriter(
 					clientSocket.getOutputStream(), true);
 			Scanner inputFromClient = new Scanner(clientSocket.getInputStream());

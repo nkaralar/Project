@@ -1,5 +1,3 @@
-
-
 /*
  * author: Nazli Karalar
  */
@@ -43,10 +41,10 @@ public class Client {
 			// creates scanner to read input from user
 			scanner = new Scanner(System.in);
 			printDialog(inputFromServer, scanner, output);
-			
+
 			// delays 1s in order to prevent the readers and the writer to close
 			// early
-			
+
 			Thread.sleep(1000);
 			output.close();
 			inputFromServer.close();
@@ -89,7 +87,7 @@ public class Client {
 		try {
 			InputStream input = new FileInputStream(new File("a.txt"));
 			SCTPReader.readHexStream(input);
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

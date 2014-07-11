@@ -1,5 +1,3 @@
-
-
 /*
  * author: Nazli Karalar
  */
@@ -9,7 +7,7 @@ import java.net.ServerSocket;
 
 public class Server {
 	public static int PORT = 9900;
-	
+
 	private static ServerSocket serverSocket;
 
 	public static void main(String[] args) throws IOException {
@@ -23,7 +21,7 @@ public class Server {
 
 		// creates a thread in order to connect multiple clients
 		new Thread(new ConnectionHandler(serverSocket)).start();
-		
+
 	}
 
 }

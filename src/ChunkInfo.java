@@ -1,4 +1,6 @@
-
+/*
+ * author: Nazli Karalar
+ */
 
 public class ChunkInfo extends SCTPReader {
 	private static int SIZE = 2;
