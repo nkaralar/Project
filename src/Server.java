@@ -23,6 +23,7 @@ public class Server {
 
 		// creates a thread in order to connect multiple clients
 		new Thread(new ConnectionHandler(serverSocket)).start();
+		
 	}
 
 }

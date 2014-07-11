@@ -13,8 +13,9 @@ public class SCTPReader {
 		int positionPointer = 0;
 		// changes position with respect to its message size
 		positionPointer = PortInfo.determinePorts(positionPointer);
-		// added 8 because did not consider verification tag and checksum
-		ChunkInfo.determineChunkInfo(positionPointer + 8);
+		// added 8 because verification tag and checksum are not considered
+		positionPointer = ChunkInfo.determineChunkInfo(positionPointer + 8);
+		IsdnInfo.determineIsdnInfo(positionPointer);
 	}
 
 	// reads stream as hex string

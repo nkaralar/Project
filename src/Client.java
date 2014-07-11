@@ -93,7 +93,6 @@ public class Client {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }
