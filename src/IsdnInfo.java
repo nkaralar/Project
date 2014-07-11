@@ -11,7 +11,6 @@ public class IsdnInfo extends SCTPReader {
 		if (chunkType == 0x00) {
 			takeIsdnInfo(pointer);
 		}
-
 		if (chunkType == 0x03 && bytes.length > 28) {
 			determineDataChunk(pointer);
 		}
@@ -55,5 +54,4 @@ public class IsdnInfo extends SCTPReader {
 	public static byte getMessageType() {
 		return messageType;
 	}
-
 }
