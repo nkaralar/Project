@@ -1,4 +1,3 @@
-
 /*
  * author: Nazli Karalar
  */
@@ -72,7 +71,7 @@ public class Client {
 	// asks for the answer of its message from server
 	private void askForAnswer(Scanner inputFromServer, PrintWriter output,
 			String text) {
-		//int msgNo = Integer.parseInt(text); 
+		// int msgNo = Integer.parseInt(text);
 		output.println(Messages.createMessages());
 		System.out.println("Server: " + inputFromServer.nextLine());
 	}
