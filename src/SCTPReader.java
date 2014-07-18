@@ -1,3 +1,5 @@
+
+
 /*
  * author: Nazli Karalar
  */
@@ -7,16 +9,17 @@ import java.util.Scanner;
 
 public class SCTPReader {
 	public static byte[] bytes;
+	public static int positionPointer = 0;
 
 	public static void readHexStream(InputStream input) {
 		String hexString = null;
 		hexString = readHexAsString(hexString, input);
 		convertToBytes(hexString);
-		int positionPointer = 0;
+
 		// changes position with respect to its message size
-		positionPointer = PortInfo.determinePorts(positionPointer);
+		PortInfo.determinePorts(positionPointer);
 		// added 8 because verification tag and checksum are not considered
-		positionPointer = ChunkInfo.determineChunkInfo(positionPointer + 8);
+		ChunkInfo.determineChunkInfo(positionPointer + 8);
 		IsdnInfo.determineIsdnInfo(positionPointer);
 	}
 
@@ -37,4 +40,13 @@ public class SCTPReader {
 			bytes[i / 2] = (byte) (hex & 0xff);
 		}
 	}
+
+	public static int getPositionPointer() {
+		return positionPointer;
+	}
+
+	public static void setPositionPointer(int positionPointer) {
+		SCTPReader.positionPointer = positionPointer;
+	}
+
 }

@@ -1,57 +1,48 @@
+
+
 /*
  * author: Nazli Karalar
  */
 
 public class IsdnInfo extends SCTPReader {
 	private static byte messageType;
-	private static byte[] messageLength;
+	private static byte isdnMsgType;
 
 	public static void determineIsdnInfo(int pointer) {
 		byte chunkType = ChunkInfo.getChunkType();
+		// according to chunk type, hex stream is changing
+		// chunk type = 0 (data)
 		if (chunkType == 0x00) {
 			takeIsdnInfo(pointer);
 		}
+		// chunk type = 3 (sack), >28 for sack notify messages
 		if (chunkType == 0x03 && bytes.length > 28) {
-			determineDataChunk(pointer);
+			determineSecondChunk(pointer);
 		}
 	}
 
 	private static void takeIsdnInfo(int pointer) {
+		// passes version, reserved and message class bytes
 		messageType = bytes[pointer + 3];
-		messageLength = new byte[4];
-		int j = 0;
-		for (int i = pointer + 4; i < pointer + 8; i++) {
-			messageLength[j] = bytes[i];
-			j++;
-		}
+		// finds decimal value of ports, 0xff is to obtain unsigned values
+		// '<< 24' shifts hex to the left by 6, '<< 16' shifts by 4 ...
+		int messageLength = (bytes[pointer + 4] << 24)
+				| (bytes[pointer + 5] << 16) | (bytes[pointer + 6] << 8)
+				| (bytes[pointer + 7]);
 	}
 
-	private static void determineDataChunk(int pointer) {
-		byte dataChunkType = bytes[pointer];
-		byte[] chunkLength = new byte[2];
-		int j = 0;
-		for (int i = pointer + 2; i < pointer + 4; i++) {
-			chunkLength[j] = bytes[i];
-			System.out.printf("0x%02X", chunkLength[j]);
-			j++;
-			System.out.println();
-		}
-		byte msgTypeIsdn = bytes[pointer + 19];
-		byte[] msgLength = new byte[4];
-		int k = 0;
-		for (int i = pointer + 20; i < pointer + 24; i++) {
-			msgLength[k] = bytes[i];
-			System.out.printf("0x%02X", msgLength[k]);
-			k++;
-			System.out.println();
-		}
-		// System.out.printf("0x%02X", msgTypeIsdn);
-		// determineIsdnInfo(pointer);
-		// System.out.printf("0x%02X", dataChunkType);
-
+	// reads chunk message coming after the data chunk
+	private static void determineSecondChunk(int pointer) {
+		byte secondChunkType = bytes[pointer];
+		int chunkLength = (bytes[pointer + 2] << 8) | bytes[pointer + 3];
+		pointer += 16;
+		isdnMsgType = bytes[pointer + 3];
+		int msgLength = (bytes[pointer + 4] << 24) | (bytes[pointer + 5] << 16)
+				| (bytes[pointer + 6] << 8) | (bytes[pointer + 7]);
 	}
 
-	public static byte getMessageType() {
-		return messageType;
+	public static byte getIsdnMsgType() {
+		return isdnMsgType;
 	}
+
 }

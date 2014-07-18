@@ -1,3 +1,5 @@
+
+
 /*
  * author: Nazli Karalar
  */
@@ -31,20 +33,20 @@ public class Client {
 
 		try {
 			callSCTPReader();
+
 			// creates socket to connect PORT = 9900 on the 'localhost'
 			socket = new Socket("localhost", PORT);
 
-			// creates writer and reader to exchange data
+			// creates writer and reader to exchange data, true is for autoflush
 			output = new PrintWriter(socket.getOutputStream(), true);
 			inputFromServer = new Scanner(socket.getInputStream());
 
-			// creates scanner to read input from user
+			// creates scanner to read input from user (in client part)
 			scanner = new Scanner(System.in);
 			printDialog(inputFromServer, scanner, output);
 
 			// delays 1s in order to prevent the readers and the writer to close
-			// early
-
+			// early. Closes and sleep will be deleted
 			Thread.sleep(1000);
 			output.close();
 			inputFromServer.close();
@@ -71,8 +73,8 @@ public class Client {
 	// asks for the answer of its message from server
 	private void askForAnswer(Scanner inputFromServer, PrintWriter output,
 			String text) {
-		int msgNo = Integer.parseInt(text);
-		output.println(Messages.createMessages(msgNo));
+		//int msgNo = Integer.parseInt(text); 
+		output.println(Messages.createMessages());
 		System.out.println("Server: " + inputFromServer.nextLine());
 	}
 
@@ -85,7 +87,11 @@ public class Client {
 
 	private void callSCTPReader() {
 		try {
-			InputStream input = new FileInputStream(new File("a.txt"));
+			// for now, method calls SCTPReader but later it will be called from
+			// the server
+			// this method will be deleted
+			InputStream input = new FileInputStream(new File(
+					"SackAspActiveAck.txt"));
 			SCTPReader.readHexStream(input);
 
 		} catch (FileNotFoundException e) {

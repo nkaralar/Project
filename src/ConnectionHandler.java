@@ -1,3 +1,5 @@
+
+
 /*
  * author: Nazli Karalar
  */
@@ -20,10 +22,13 @@ public class ConnectionHandler implements Runnable {
 	public void run() {
 		try {
 			clientSocket = serverSocket.accept();
+			View.createFrame();
+
 			// creates writer and reader to exchange data; true is for auto
 			// flush
 			PrintWriter serverOutput = new PrintWriter(
 					clientSocket.getOutputStream(), true);
+			// takes user input coming from client
 			Scanner inputFromClient = new Scanner(clientSocket.getInputStream());
 
 			// creates scanner to read input from user
@@ -40,12 +45,13 @@ public class ConnectionHandler implements Runnable {
 	private void printDialog(Scanner scanner, PrintWriter serverOutput,
 			Scanner inputFromClient) {
 		String clientInput;
+		// while loop is for taking and sending string messages, it will be
+		// changed
 		System.out.println("Enter a msg number: ");
 		while ((clientInput = inputFromClient.nextLine()) != null) {
 			sendAnswer(serverOutput, clientInput);
 			askForAnswers(scanner, serverOutput, inputFromClient);
 			System.out.println("\nEnter a msg number: ");
-
 		}
 	}
 
@@ -58,8 +64,9 @@ public class ConnectionHandler implements Runnable {
 	// asks for the answer of its message from client
 	private void askForAnswers(Scanner scanner, PrintWriter output,
 			Scanner input) {
+		// msgNo will be deleted because no need to take input from the user
 		int msgNo = scanner.nextInt();
-		output.println(Messages.createMessages(msgNo));
+		output.println(Messages.createMessages());
 		System.out.println("Client: " + input.nextLine());
 	}
 

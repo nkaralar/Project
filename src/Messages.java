@@ -1,15 +1,30 @@
+
+
 /*
  * author: Nazli Karalar
  */
 
 public class Messages {
+	private static boolean[] isSelected;
 
-	public static String createMessages(int msgNo) {
+	public static String createMessages() {
+		// it will be changed because of the CheckBoxController class
+		isSelected = new boolean[5];
+		CheckBoxController c = new CheckBoxController();
+		isSelected = c.getIsSelected();
 		String result = null;
-		switch (msgNo) {
+		for (int i = 0; i < isSelected.length; i++) {
+			if (isSelected[i] == true) {
+				result = findMessage(i, result);
+			}
+		}
+		return result;
+	}
+
+	private static String findMessage(int i, String result) {
+		switch (i) {
 		case 1:
 			result = showMessage1();
-			Math.abs(3);
 			break;
 		case 2:
 			result = showMessage2();

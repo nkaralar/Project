@@ -1,34 +1,39 @@
+
+
 /*
  * author: Nazli Karalar
- */
+ */ 
 
 public class ChunkInfo extends SCTPReader {
-	private static int SIZE = 2;
 	private static byte chunkType, chunkFlag;
-	private static byte[] chunkLength;
+	private static int chunkLength;
 
-	public static int determineChunkInfo(int pointer) {
-		chunkLength = new byte[SIZE];
+	public static void determineChunkInfo(int pointer) {
 		determineTypeAndFlag(pointer);
-		determineChunkLength(pointer, chunkLength);
-		pointer += 16; // chunk length = 16 (it will be changed..)
-		return pointer;
+		determineChunkLength(pointer);
+		if (chunkType != 0) {
+			// every chunk type has own length
+			pointer += chunkLength;
+
+		} else {
+			// chunk length includes isdn message size as well
+			// every data chunk (its type=0) consists of 16 bytes, so adds 16
+			pointer += 16;
+		}
+		setPositionPointer(pointer);
 	}
 
-	// determines chunk type and flag
 	private static void determineTypeAndFlag(int pointer) {
 		// pointer is 12 (chunk type position)
 		chunkType = bytes[pointer];
 		chunkFlag = bytes[pointer + 1];
 	}
 
-	private static void determineChunkLength(int pointer, byte[] chunkLength) {
-		int j = 0;
-		// position of chunk length is pointer+2 and its size is 2
-		for (int i = pointer + 2; i < pointer + 4; i++) {
-			chunkLength[j] = bytes[i];
-			j++;
-		}
+	private static void determineChunkLength(int pointer) {
+		pointer += 2; // chunk length starts at pointer 14
+		// finds decimal value of chunk length, 0xff is to obtain unsigned
+		// values
+		chunkLength = (bytes[pointer] << 8) | bytes[pointer + 1] & 0xff;
 	}
 
 	public static byte getChunkType() {
@@ -39,7 +44,4 @@ public class ChunkInfo extends SCTPReader {
 		return chunkFlag;
 	}
 
-	public static byte[] getChunkLength() {
-		return chunkLength;
-	}
 }
