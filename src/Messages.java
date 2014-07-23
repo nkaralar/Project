@@ -2,6 +2,11 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class finds which message comes to server 
+ *
+ */
+
 public class Messages {
 	private static boolean[] isSelected;
 

@@ -2,6 +2,10 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class keeps port information that is read from socket stream
+ * 
+ */
 public class PortInfo extends SCTPReader {
 
 	// determine source and destination ports

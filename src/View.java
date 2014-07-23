@@ -2,6 +2,10 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class prepares the GUI and connection handler class will call createFrame method
+ */
+
 import java.awt.GridLayout;
 
 import javax.swing.JButton;

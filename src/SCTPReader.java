@@ -5,6 +5,10 @@
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * This class reads the hex strings and transform into bytes
+ *
+ */
 public class SCTPReader {
 	public static byte[] bytes;
 	public static int positionPointer = 0;

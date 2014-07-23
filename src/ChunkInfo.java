@@ -2,6 +2,11 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class keeps the chunk information that is read from socket stream
+ * Updates the position with respect to chunk info length
+ */
+
 public class ChunkInfo extends SCTPReader {
 	private static byte chunkType, chunkFlag;
 	private static int chunkLength;

@@ -2,6 +2,12 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class keeps the answers for certain messages. When msg1 is sent, answer1 is shown
+ *
+ *
+ */
+
 public class Answers {
 
 	public static String createAnswers(int answerNo) {

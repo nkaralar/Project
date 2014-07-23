@@ -1,5 +1,11 @@
 /*
  * author: Nazli Karalar
+
+ */
+
+/**
+ * This class is related to server part, it enables multiple users
+ * to connect server by using threading
  */
 
 import java.io.IOException;

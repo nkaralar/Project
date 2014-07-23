@@ -2,6 +2,11 @@
  * author: Nazli Karalar
  */
 
+
+/**
+ * This class keeps the Isdn information that is read from socket stream
+ *
+ */
 public class IsdnInfo extends SCTPReader {
 	private static byte messageType;
 	private static byte isdnMsgType;

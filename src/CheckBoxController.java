@@ -2,6 +2,10 @@
  * author: Nazli Karalar
  */
 
+/**
+ * This class checks if checkBoxes are selected
+ * If boxes[1] is selected, then isSelected[1] will be true
+ */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
